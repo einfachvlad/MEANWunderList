@@ -1,0 +1,54 @@
+<nav class="navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <h2 class="navbar-brand">All in time</h2>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-click="todosCtrl.addTask()"><a href="#"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add Task</a></li>
+            <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Tasks<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">All Tasks</a></li>
+            <li><a href="#">To Do</a></li>
+            <li><a href="#">In Progress</a></li>
+            <li><a href="#">To Testing</a></li>
+            <li><a href="#">Done</a></li>
+        </ul>
+        </li>
+        </ul>
+    </div>
+</nav>
+<main>
+    <div class="row todos-field">
+        <ul class="todo-panel">
+            <todo-card ng-repeat="todo in todosCtrl.todos track by $index"></todo-card>
+        </ul>
+        <ul class="todo-panel">
+            <todo-card ng-repeat="todo in todosCtrl.progress track by $index"></todo-card>
+        </ul>
+        <ul class="todo-panel">
+            <todo-card ng-repeat="todo in todosCtrl.testing track by $index"></todo-card>
+        </ul>
+        <ul class="todo-panel">
+            <todo-card ng-repeat="todo in todosCtrl.done track by $index"></todo-card>
+        </ul>
+    </div>
+</main>
+<!-- <div class="container">
+    <div class="row">
+        <div class="input-group addingTask">
+            <input type="text" class="form-control" ng-model="newTask" placeholder="Input new task">
+            <div class="input-group-btn">
+                <button class="btn btn-success" type="button" name="button">Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-default col-md-3">
+            <div class="panel-heading row">Some</div>
+            <div class="panel-body">
+                Task
+            </div>
+        </div>
+    </div>
+</div> -->
