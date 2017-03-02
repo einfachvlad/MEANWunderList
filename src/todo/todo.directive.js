@@ -1,4 +1,4 @@
-export default function todoCard() {
+todoCard() {
     return {
         restrict: 'E',
         templateUrl: 'todo.template.html'
