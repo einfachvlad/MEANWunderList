@@ -1,5 +1,4 @@
 export default function todosController(todoFactory) {
-this.filterTodos="All Tasks"
     this.todosArray = [];
     this.todos = [];
     this.progress = [];
@@ -12,18 +11,32 @@ this.filterTodos="All Tasks"
     this.deleteTask = todoFactory.deleteTask;
     this.sort = todoFactory.sort;
     this.clear = todoFactory.clear;
-
+    this.ToDoCh = true;
+    this.ProgressCh = true;
+    this.TestingCh = true;
+    this.DoneCh = true;
+    // this.todosCategories = {
+    //     "To Do": this.todos,
+    //     "In Progress": this.progress,
+    //     "To Testing": this.testing,
+    //     "Done": this.done
+    // };
 }
-
+todosController.prototype.bookmarkToggle = function(task) {
+    task.isBookmarked = !task.isBookmarked;
+    this.saveTask(task);
+};
 todosController.prototype.addTask = function() {
     const task = {
         "time": "",
-        "date": "",
+        "date": convertedtDate(),
         "description": "",
         "status": "todo",
         "isEditable": true,
-        "isCreated": false
+        "isCreated": false,
+        "isBookmarked": false
     }
+    console.log(task);
     this.todosArray.push(task);
     this.todos.push(task);
 }
@@ -31,7 +44,6 @@ todosController.prototype.addTask = function() {
 todosController.prototype.editTask = function(task) {
     task.isEditable = true;
 }
-
 todosController.prototype.rightMove = function(task) {
     switch (task.status) {
         case "todo":
@@ -68,4 +80,37 @@ todosController.prototype.leftMove = function(task) {
     this.saveTask(task);
     this.clear.call(this);
     this.sort.call(this, this.array);
+}
+
+todosController.prototype.onDropComplete = function(event, ui, taskArray,columnTitle) {
+    switch (columnTitle) {
+        case "todo":
+            taskArray[taskArray.length - 1].status = "todo"
+            break;
+        case "progress":
+            taskArray[taskArray.length - 1].status = "progress";
+            break;
+        case "testing":
+            taskArray[taskArray.length - 1].status = "testing";
+            break;
+        case "done":
+            taskArray[taskArray.length - 1].status = "done";
+            break;
+    }
+console.log(taskArray[taskArray.length - 1]);
+    this.saveTask(taskArray[taskArray.length - 1]);
+}
+
+function convertedtDate() {
+    const date = new Date();
+    function convert(datePart) {
+        return (datePart < 10)
+            ? '0' + datePart
+            : datePart;
+    }
+    return [
+        convert(date.getDate()),
+        convert(date.getMonth() + 1),
+        date.getFullYear()
+    ].join('/');
 }

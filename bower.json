@@ -1,0 +1,21 @@
+{
+  "name": "MEANWunderList",
+  "description": "Wunderlist MEAN stack",
+  "main": "index.js",
+  "authors": [
+    "Uladzislau Tarasenka"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngDraggable": "^0.1.11",
+    "angular-dragdrop": "^1.0.13"
+  }
+}

@@ -1,0 +1,42 @@
+.ribbon {
+    padding: 0 0 $ribbon-tail;
+    position: absolute;
+    right: 1.5em;
+    top: -0.25em;
+    width: $ribbon-w;
+
+    span {
+        -webkit-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        display: block;
+        background: $ribbon-color;
+        padding: 0.5em 0;
+        text-align: center;
+        height: 24px;
+
+        &:after {
+            -webkit-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+            border-left: $ribbon-w/2 solid $ribbon-color;
+            border-right: $ribbon-w/2 solid $ribbon-color;
+            border-bottom: $ribbon-tail solid transparent;
+            bottom: 0;
+            content: '';
+            height: 0;
+            left: 0;
+            position: absolute;
+            width: 0;
+        }
+    }
+}
+
+.active {
+    span {
+        background: $active-ribbon-color;
+
+        &:after {
+            border-left: $ribbon-w/2 solid $active-ribbon-color;
+            border-right: $ribbon-w/2 solid $active-ribbon-color;
+        }
+    }
+}

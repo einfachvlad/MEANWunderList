@@ -1,0 +1,112 @@
+.navbar {
+    background: $white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+    border-radius: 0;
+
+    .container {
+        position: relative;
+        height: 6vh;
+
+        .navbar-header {
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        h2 {
+            color: $blue;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .navbar-brand {
+            padding: 0;
+            height: 6vh;
+            text-transform: uppercase;
+
+            img {
+                height: 6vh;
+                display: inline-block;
+            }
+        }
+
+        li {
+            position: relative;
+
+            .search {
+                height: 6vh;
+                width: 20vw;
+                border: 0;
+                text-indent: 30px;
+            }
+
+            a {
+                -webkit-transition: 0.3s linear;
+                transition: 0.3s linear;
+                text-transform: uppercase;
+                color: $black;
+                font-weight: bold;
+                line-height: 6vh;
+                padding-top: 0;
+                padding-bottom: 0;
+
+                &:hover {
+                    .glyphicon {
+                        -webkit-transform: rotate(90deg);
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+
+            span {
+                &.glyphicon {
+                    margin-right: 5px;
+                    -webkit-transition: all 0.3s ease;
+                    transition: all 0.3s ease;
+
+                    &.glyphicon-search {
+                        position: absolute;
+                        -webkit-transform: translateY(150%);
+                        transform: translate(50%,150%);
+                    }
+                }
+
+                &.caret {
+                    margin-left: 10px;
+                }
+                color: $blue;
+            }
+
+            label {
+                line-height: 6vh;
+                margin-bottom: 0;
+
+                input[type='checkbox'] {
+                    vertical-align: sub;
+                    margin-right: 10px;
+                }
+            }
+
+            .dropdown-menu {
+                li {
+                    a,
+                    label {
+                        text-transform: uppercase;
+                        color: $black;
+                        font-weight: bold;
+                        font-size: 14px;
+                        margin: 5% 0;
+                        line-height: 2vh;
+
+                        input {
+                            margin: 0 5%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

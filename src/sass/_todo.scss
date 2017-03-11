@@ -1,0 +1,30 @@
+.todo {
+    width: 16vw;
+    margin: 0 auto 25px;
+    box-sizing: border-box;
+    background-color: $main-background-color;
+    border-radius: 15px;
+    cursor: move;
+
+    .panel-body {
+        background: $main-background-color;
+        border-radius: 15px;
+        position: relative;
+
+        .info {
+            padding: 0;
+
+            li {
+                list-style: none;
+
+                textarea {
+                    resize: none;
+                }
+            }
+        }
+    }
+
+    .panel-footer {
+        border-radius: 0 0 15px 15px;
+    }
+}

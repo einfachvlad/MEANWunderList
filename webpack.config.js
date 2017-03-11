@@ -25,10 +25,10 @@ const config = {
                     presets: ['es2015']
                 }
             }, {
-                test: /\.html$/,
+                test: /\.(html|png)$/,
                 loader: 'raw'
             }, {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 loaders: ['style', 'css', 'autoprefixer?browsers=last 3 versions', 'sass?outputStyle=expanded']
             }, {
                 test: /\.(woff2?|ttf|eot|svg)$/,

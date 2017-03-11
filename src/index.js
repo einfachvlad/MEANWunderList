@@ -1,34 +1,42 @@
-import angular from 'angular';
+//import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import 'sass/master.scss';
 import todoFactory from './factories/todo-factory';
-import todosController from './todos/todosController.js'
+import config from './config';
 
-const app = angular.module('app', [uiRouter,todoFactory.name]);
-
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-    $urlRouterProvider.otherwise('/');
-
-    $stateProvider
-            .state('todos', {
-                url: '/',
-                template:require('todos/todos.html'),
-                controller: todosController,
-                controllerAs: 'todosCtrl'
-            })
-            .state('about', {
-                url: '/about',
-                template:require('about/about.html')
-            });
-//console.log($injector.has('todoCardDirective'));
-    //$locationProvider.html5Mode(true);
-});
+const app = angular.module('app', [uiRouter, todoFactory.name,'ngDragDrop']);
+app.config(config);
 
 app.directive('todoCard', function() {
     return {
         restrict: 'E',
-        template: require('todo/todo.template.html')
+        replace:true,
+        template: require('todo/todo.template.html')};
+});
+app.filter('bookmarkFilter', function() {
+    return function(todosArray,bookmarkedCh) {
+        if (bookmarkedCh) {
+            return todosArray.filter(item => item.isBookmarked);
+        }
+        return todosArray;
     };
 });
-
+app.directive('datepicker', function() {
+    return {
+        restrict: 'A',
+        require : 'ngModel',
+        link : function (scope, element, attrs, ngModelCtrl) {
+            $(function(){
+                element.datepicker({
+                    dateFormat:'dd/mm/yy',
+                    onSelect:function (date) {
+                        scope.$apply(function () {
+                            ngModelCtrl.$setViewValue(date);
+                        });
+                    }
+                });
+            });
+        }
+    }
+});
 export default app;

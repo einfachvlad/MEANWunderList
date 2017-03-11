@@ -1,36 +1,56 @@
 <nav class="navbar">
     <div class="container">
         <div class="navbar-header">
-            <h2 class="navbar-brand">All in time</h2>
+            <!-- <h2 class="navbar-brand">All in time</h2> -->
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="src/assets/time_logo.png"> Firetime!
+            </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li ng-click="todosCtrl.addTask()"><a href="#"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add Task</a></li>
+            <li><span class="glyphicon glyphicon-search"></span><input type="text" placeholder="Search" class=" search" ng-model="todosCtrl.filterText"></li>
+            <li ng-click="todosCtrl.addTask()"><a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Task</a></li>
             <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{todosCtrl.filterTodos}}<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#" ng-click="todosCtrl.filterTodos='All Tasks'">All Tasks</a></li>
-            <li><a href="#" ng-click="todosCtrl.filterTodos='To Do'">To Do</a></li>
-            <li><a href="#" ng-click="todosCtrl.filterTodos='In Progress'">In Progress</a></li>
-            <li><a href="#" ng-click="todosCtrl.filterTodos='To Testing'">To Testing</a></li>
-            <li><a href="#" ng-click="todosCtrl.filterTodos='Done'">Done</a></li>
+            <li><label class="center-block"><input type="checkbox"  ng-model="todosCtrl.ToDoCh">To Do</label></li>
+            <li><label class="center-block"><input type="checkbox"  ng-model="todosCtrl.ProgressCh">In Progress</label></li>
+            <li><label class="center-block"><input type="checkbox"  ng-model="todosCtrl.TestingCh">To Testing</label></li>
+            <li><label class="center-block"><input type="checkbox"  ng-model="todosCtrl.DoneCh">Done</label></li>
         </ul>
         </li>
+        <li><label class="center-block"><input type="checkbox" ng-model="todosCtrl.BookmarkedCh">Only Bookmarked</label></li>
         </ul>
     </div>
 </nav>
 <main>
     <div class="wrapper todos-field">
-        <ul class="todo-panel" ng-if="todosCtrl.filterTodos=='All Tasks'||todosCtrl.filterTodos=='To Do'">
-            <todo-card ng-repeat="todo in todosCtrl.todos track by $index"></todo-card>
-        </ul>
-        <ul class="todo-panel" ng-if="todosCtrl.filterTodos=='All Tasks'||todosCtrl.filterTodos=='In Progress'">
-            <todo-card ng-repeat="todo in todosCtrl.progress track by $index"></todo-card>
-        </ul>
-        <ul class="todo-panel" ng-if="todosCtrl.filterTodos=='All Tasks'||todosCtrl.filterTodos=='To Testing'">
-            <todo-card ng-repeat="todo in todosCtrl.testing track by $index"></todo-card>
-        </ul>
-        <ul class="todo-panel" ng-if="todosCtrl.filterTodos=='All Tasks'||todosCtrl.filterTodos=='Done'">
-            <todo-card ng-repeat="todo in todosCtrl.done track by $index"></todo-card>
-        </ul>
+        <div class="todo-panel" ng-show="todosCtrl.ToDoCh" data-drop="true" ng-model="todosCtrl.todos" jqyoui-droppable="{multiple:true, onDrop:'todosCtrl.onDropComplete(todosCtrl.todos,&quot;todo&quot;)'}"  data-jqyoui-options="{accept:'[jqyoui-draggable]:not([ng-model=todosCtrl.todos])'}" >
+            <h3>To Do</h3>
+            <ul class="todo-panel-body">
+                <todo-card ng-repeat="todo in todosCtrl.todos|filter:todosCtrl.filterText|bookmarkFilter:todosCtrl.BookmarkedCh:todosCtrl.todos"
+                data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="todosCtrl.todos" jqyoui-draggable="{index: {{$index}},animate:true}"></todo-card>
+            </ul>
+        </div>
+        <div class="todo-panel" ng-show="todosCtrl.ProgressCh" data-drop="true" ng-model="todosCtrl.progress" jqyoui-droppable="{multiple:true, onDrop:'todosCtrl.onDropComplete(todosCtrl.progress,&quot;progress&quot;)'}" data-jqyoui-options="{accept:'[jqyoui-draggable]:not([ng-model=todosCtrl.progress])'}" >
+            <h3>In Progress</h3>
+            <ul class="todo-panel-body">
+                <todo-card ng-repeat="todo in todosCtrl.progress|filter:todosCtrl.filterText|bookmarkFilter:todosCtrl.BookmarkedCh:todosCtrl.progress"
+                data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="todosCtrl.progress" jqyoui-draggable="{index: {{$index}},animate:true}"></todo-card>
+            </ul>
+        </div>
+        <div class="todo-panel" ng-show="todosCtrl.TestingCh" data-drop="true" ng-model="todosCtrl.testing" jqyoui-droppable="{multiple:true, onDrop:'todosCtrl.onDropComplete(todosCtrl.testing,&quot;testing&quot;)'}" data-jqyoui-options="{accept:'[jqyoui-draggable]:not([ng-model=todosCtrl.testing])'}" >
+            <h3>To Testing</h3>
+            <ul class="todo-panel-body">
+                <todo-card ng-repeat="todo in todosCtrl.testing|filter:todosCtrl.filterText|bookmarkFilter:todosCtrl.BookmarkedCh:todosCtrl.testing"
+                data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="todosCtrl.testing" jqyoui-draggable="{index: {{$index}},animate:true}"></todo-card>
+            </ul>
+        </div>
+        <div class="todo-panel" ng-show="todosCtrl.DoneCh" data-drop="true" ng-model="todosCtrl.done" jqyoui-droppable="{multiple:true, onDrop:'todosCtrl.onDropComplete(todosCtrl.done,&quot;done&quot;)'}" data-jqyoui-options="{accept:'[jqyoui-draggable]:not([ng-model=todosCtrl.done])'}" >
+            <h3>Done</h3>
+            <ul class="todo-panel-body">
+                <todo-card ng-repeat="todo in todosCtrl.done|filter:todosCtrl.filterText|bookmarkFilter:todosCtrl.BookmarkedCh:todosCtrl.done"
+                data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="todosCtrl.done" jqyoui-draggable="{index: {{$index}},animate:true}"></todo-card>
+            </ul>
+        </div>
     </div>
 </main>

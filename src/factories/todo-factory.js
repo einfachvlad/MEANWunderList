@@ -1,8 +1,15 @@
 import angular from 'angular';
+import ngResource from 'angular-resource';
 
-const todoFactory = angular.module('app.todoFactory', []).factory('todoFactory', [
-    '$http',
-    function($http) {
+const todoFactory = angular.module('app.todoFactory', [ngResource]).factory('todoFactory', [
+    '$resource',
+    function($resource) {
+        const Todos = $resource('/todos');
+        const Todo = $resource('/todos/:id',null, {
+            'update': {
+                method: 'PUT'
+            }
+        });
         function sort() {
             this.todosArray.forEach((element) => {
                 switch (element.status) {
@@ -22,21 +29,22 @@ const todoFactory = angular.module('app.todoFactory', []).factory('todoFactory',
             });
         }
         function createTask(task) {
+            const that = this;
             task.isEditable = false;
             task.isCreated = true;
-            $http.post('/todos', task).then(response => {
-                this.getTasks();
+            Todos.save(task, function() {
+                that.getTasks();
             });
         };
         function saveTask(task) {
             task.isEditable = false;
-            $http.put(`/todos/${task._id}`, task);
+            Todo.update({id: task._id}, task);
         };
         function getTasks() {
-            $http.get('/todos').then(response => {
-                this.todosArray = response.data.todos;
-                this.clear.call(this);
-                this.sort.call(this);
+            const that = this;
+            this.todosArray = Todos.query(function() {
+                that.clear.call(that);
+                that.sort.call(that);
             });
         };
 
@@ -63,7 +71,7 @@ const todoFactory = angular.module('app.todoFactory', []).factory('todoFactory',
                     break;
             }
             this.todosArray.splice(this.todosArray.indexOf(task), 1);
-            $http.delete(`/todos/${task._id}`);
+            Todo.delete({id: task._id});
         };
 
         return {

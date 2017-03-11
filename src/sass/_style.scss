@@ -1,0 +1,39 @@
+body,
+html {
+    background: $main-background-color;
+    height: 100%;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 90%;
+}
+
+main {
+    padding-top: 50px;
+
+    .todos-field {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+    }
+}
+
+[jqyoui-draggable] {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
